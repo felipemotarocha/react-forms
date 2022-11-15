@@ -1,5 +1,14 @@
 import { useForm } from "react-hook-form";
-import { isEmail } from "validator";
+import validator from "validator";
+
+interface FormData {
+  name: string;
+  email: string;
+  password: string;
+  passwordConfirmation: string;
+  profession: string;
+  privacyTerms: boolean;
+}
 
 const GoodForm = () => {
   const {
@@ -7,15 +16,13 @@ const GoodForm = () => {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm();
+  } = useForm<FormData>();
 
   const watchPassword = watch("password");
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: FormData) => {
     alert(JSON.stringify(data));
   };
-
-  console.log("RENDER");
 
   return (
     <div className="app-container">
@@ -40,7 +47,7 @@ const GoodForm = () => {
           placeholder="Your e-mail"
           {...register("email", {
             required: true,
-            validate: (value) => isEmail(value),
+            validate: (value) => validator.isEmail(value),
           })}
         />
         {errors?.email?.type === "required" && (
@@ -112,7 +119,6 @@ const GoodForm = () => {
         <div className="checkbox-group">
           <input
             type="checkbox"
-            name="privacy-policy"
             {...register("privacyTerms", {
               validate: (value) => value === true,
             })}
