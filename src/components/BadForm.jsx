@@ -21,6 +21,7 @@ const BadForm = () => {
   const handleSubmit = () => {
     let formIsValid = true;
 
+    // se nome for vazio 
     if (isEmpty(userForm.name)) {
       setErrors((prev) => ({ ...prev, name: "Name is required." }));
       formIsValid = false;
